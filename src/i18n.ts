@@ -4,7 +4,7 @@ export type Lang = "zh" | "en";
 const translations = {
   zh: {
     // 顶栏
-    appTitle: "MCP 网关",
+    appTitle: "鑫帝鸿全屋定制小管家",
     running: "运行中",
     stopped: "已停止",
     starting: "启动中…",
@@ -173,7 +173,7 @@ const translations = {
   },
   en: {
     // Topbar
-    appTitle: "MCP Gateway",
+    appTitle: "XDH Custom Furnishing Assistant",
     running: "Running",
     stopped: "Stopped",
     starting: "Starting…",
