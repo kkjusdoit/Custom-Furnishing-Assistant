@@ -30,6 +30,7 @@ type Order = {
   title: string;
   status: OrderStatus;
   total: number;
+  paidAmount: number;
   statusUpdatedAt: string;
   note: string;
 };
@@ -140,6 +141,7 @@ const INITIAL_ORDERS: Order[] = [
     title: "主卧衣柜+书房",
     status: "producing",
     total: 45800,
+    paidAmount: 18000,
     statusUpdatedAt: "2026-02-24T08:00:00.000Z",
     note: "封边条需要加急",
   },
@@ -149,6 +151,7 @@ const INITIAL_ORDERS: Order[] = [
     title: "全屋定制",
     status: "quoted",
     total: 61200,
+    paidAmount: 0,
     statusUpdatedAt: "2026-03-06T10:00:00.000Z",
     note: "等待客户确认方案",
   },
@@ -158,6 +161,7 @@ const INITIAL_ORDERS: Order[] = [
     title: "厨房+鞋柜",
     status: "measured",
     total: 28600,
+    paidAmount: 12000,
     statusUpdatedAt: "2026-03-01T15:30:00.000Z",
     note: "量尺完成，准备出图",
   },
@@ -167,6 +171,7 @@ const INITIAL_ORDERS: Order[] = [
     title: "阳台储物柜",
     status: "installing",
     total: 9800,
+    paidAmount: 9800,
     statusUpdatedAt: "2026-03-10T09:15:00.000Z",
     note: "安排师傅上门",
   },
@@ -271,6 +276,11 @@ function App() {
     dueInDays: 1,
   });
 
+  const [paymentForm, setPaymentForm] = useState({
+    orderId: orders.find((order) => order.total > order.paidAmount)?.id ?? orders[0]?.id ?? "",
+    amount: 0,
+  });
+
   const ordersByStatus = useMemo(
     () =>
       STATUS_FLOW.map((status) => ({
@@ -326,14 +336,24 @@ function App() {
       (order) => order.status === "producing" || order.status === "installing",
     ).length;
     const pipelineValue = orders.reduce((sum, order) => sum + order.total, 0);
+    const unpaidValue = orders.reduce(
+      (sum, order) => sum + Math.max(0, order.total - order.paidAmount),
+      0,
+    );
 
     return {
       monthlyCustomers,
       activeOrders,
       producingOrders,
       pipelineValue,
+      unpaidValue,
     };
   }, [customers, orders]);
+
+  const unpaidOrders = useMemo(
+    () => orders.filter((order) => order.total > order.paidAmount),
+    [orders],
+  );
 
   const quotePreview = useMemo(() => {
     const projectionArea = (quoteForm.length * quoteForm.height) / 1_000_000;
@@ -413,6 +433,7 @@ function App() {
       title: orderForm.title.trim(),
       status: orderForm.status,
       total: orderForm.total,
+      paidAmount: 0,
       statusUpdatedAt: new Date().toISOString(),
       note: orderForm.note.trim(),
     };
@@ -466,6 +487,18 @@ function App() {
     };
     setManualReminders((prev) => [newReminder, ...prev]);
     setReminderForm({ title: "", dueInDays: 1 });
+  };
+
+  const handleAddPayment = () => {
+    if (!paymentForm.orderId || paymentForm.amount <= 0) return;
+    setOrders((prev) =>
+      prev.map((order) => {
+        if (order.id !== paymentForm.orderId) return order;
+        const nextPaid = Math.min(order.total, order.paidAmount + paymentForm.amount);
+        return { ...order, paidAmount: nextPaid };
+      }),
+    );
+    setPaymentForm((prev) => ({ ...prev, amount: 0 }));
   };
 
   const activeOrders = orders.filter((order) => order.status !== "delivered");
@@ -540,6 +573,11 @@ function App() {
                   <div className="stat-label">订单金额池</div>
                   <div className="stat-value">{formatMoney(stats.pipelineValue)}</div>
                   <div className="stat-meta">估算总额</div>
+                </div>
+                <div className="stat-card reveal" style={{ "--delay": "0.2s" } as CSSProperties}>
+                  <div className="stat-label">待收款金额</div>
+                  <div className="stat-value">{formatMoney(stats.unpaidValue)}</div>
+                  <div className="stat-meta">未结清订单</div>
                 </div>
               </div>
 
@@ -773,6 +811,69 @@ function App() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              <div className="card">
+                <div className="card-header">
+                  <div>
+                    <h3>未收账目订单记录</h3>
+                    <p>用于催收与回款跟进</p>
+                  </div>
+                  <span className="badge">欠款 {unpaidOrders.length}</span>
+                </div>
+                <div className="payment-form">
+                  <select
+                    className="select"
+                    value={paymentForm.orderId}
+                    onChange={(event) =>
+                      setPaymentForm((prev) => ({ ...prev, orderId: event.target.value }))
+                    }
+                  >
+                    {unpaidOrders.length === 0 ? (
+                      <option value="">暂无欠款订单</option>
+                    ) : (
+                      unpaidOrders.map((order) => (
+                        <option key={order.id} value={order.id}>
+                          {order.title}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                  <input
+                    className="input"
+                    type="number"
+                    min={0}
+                    placeholder="记录本次收款金额"
+                    value={paymentForm.amount}
+                    onChange={(event) =>
+                      setPaymentForm((prev) => ({ ...prev, amount: Number(event.target.value) }))
+                    }
+                  />
+                  <button className="button" type="button" onClick={handleAddPayment} disabled={unpaidOrders.length === 0}>
+                    记录收款
+                  </button>
+                </div>
+                {unpaidOrders.length === 0 ? (
+                  <div className="empty-state">全部订单已结清，暂无欠款。</div>
+                ) : (
+                  <div className="list">
+                    {unpaidOrders.map((order) => {
+                      const customer = customers.find((item) => item.id === order.customerId);
+                      const remaining = Math.max(0, order.total - order.paidAmount);
+                      return (
+                        <div className="list-item" key={order.id}>
+                          <div>
+                            <div className="list-title">{order.title}</div>
+                            <div className="list-meta">
+                              {customer?.name} · 已收 {formatMoney(order.paidAmount)} / 总价 {formatMoney(order.total)}
+                            </div>
+                          </div>
+                          <span className="status-pill unpaid">欠款 {formatMoney(remaining)}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
           )}

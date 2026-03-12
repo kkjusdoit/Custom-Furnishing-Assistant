@@ -287,6 +287,11 @@
   color: #15803d;
 }
 
+.status-pill.unpaid {
+  background: rgba(239, 68, 68, 0.14);
+  color: #b91c1c;
+}
+
 .status-pill.urgent {
   background: rgba(239, 68, 68, 0.16);
   color: #b91c1c;
@@ -448,6 +453,21 @@
   margin-bottom: 16px;
 }
 
+.payment-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px auto;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.empty-state {
+  padding: 12px;
+  border-radius: var(--radius);
+  background: rgba(15, 118, 110, 0.08);
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
 .quote-summary {
   display: flex;
   justify-content: space-between;
@@ -526,6 +546,10 @@
   }
 
   .reminder-form {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-form {
     grid-template-columns: 1fr;
   }
 
