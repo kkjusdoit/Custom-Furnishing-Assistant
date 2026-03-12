@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Sora:wght@400;500;600&display=swap");
+
+:root {
+  --bg: #f6f1e7;
+  --bg-alt: #fff7ec;
+  --surface: #fffdf8;
+  --surface-strong: #ffffff;
+  --ink: #1b2a28;
+  --ink-muted: #51605b;
+  --accent: #0f766e;
+  --accent-strong: #0b5f59;
+  --accent-warm: #d97706;
+  --accent-soft: #e2f3f1;
+  --line: rgba(15, 118, 110, 0.18);
+  --shadow: 0 20px 40px rgba(15, 35, 32, 0.16);
+  --radius-lg: 18px;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font-display: "Fraunces", "Times New Roman", serif;
+  --font-body: "Sora", "Helvetica Neue", sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background-color: var(--bg);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20% -10% auto -10%;
+  height: 80%;
+  background: radial-gradient(circle at 20% 20%, rgba(15, 118, 110, 0.18), transparent 60%),
+    radial-gradient(circle at 80% 10%, rgba(217, 119, 6, 0.15), transparent 55%);
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+      120deg,
+      rgba(15, 118, 110, 0.06),
+      rgba(15, 118, 110, 0.06) 1px,
+      transparent 1px,
+      transparent 12px
+    ),
+    repeating-linear-gradient(
+      -120deg,
+      rgba(217, 119, 6, 0.04),
+      rgba(217, 119, 6, 0.04) 1px,
+      transparent 1px,
+      transparent 16px
+    );
+  opacity: 0.6;
+  z-index: -1;
+  pointer-events: none;
+}
+
+#root {
+  min-height: 100vh;
+}

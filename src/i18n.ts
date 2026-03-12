@@ -1,0 +1,350 @@
+// ── 中英文翻译字典 ─────────────────────────────────────────────────
+export type Lang = "zh" | "en";
+
+const translations = {
+  zh: {
+    // 顶栏
+    appTitle: "MCP 网关",
+    running: "运行中",
+    stopped: "已停止",
+    starting: "启动中…",
+    stopping: "停止中…",
+    start: "启动",
+    stop: "停止",
+
+    // Tab 标签
+    tabMcp: "MCP",
+    tabSkills: "SKILLS",
+
+    // 网关设置
+    gatewaySettings: "网关设置",
+    listenAddress: "监听地址",
+    ssePath: "SSE 路径",
+    httpStreamPath: "HTTP 流路径",
+
+    // Security
+    securityConfig: "安全配置",
+    adminToken: "Admin Token",
+    mcpToken: "MCP Token",
+    authHeaderHint: "请求头：Authorization",
+    tokenPlaceholder: "留空则禁用",
+
+    // Skills
+    skillsConfig: "Skill MCP",
+    skillsEnable: "启用内置 Skill MCP",
+    skillsServerName: "Skill 服务名",
+    skillsRoots: "Skill 根目录",
+    skillsRootsHint: "仅检测该目录下是否存在 SKILL.md（不递归）",
+    skillsPathGuard: "路径守卫",
+    skillsPathGuardEnable: "启用路径白名单保护",
+    skillsWhitelistDirs: "白名单目录",
+    skillsWhitelistHint: "添加绝对目录；路径越界将触发策略",
+    addFolderPath: "添加目录",
+    browseFolder: "浏览",
+    folderPathPlaceholder: "输入目录路径或点击浏览",
+    skillDirIdle: "未检测",
+    skillDirChecking: "检测中",
+    skillDirValid: "检测成功",
+    skillDirInvalid: "未发现 SKILL.md",
+    skillDirError: "检测失败",
+    skillRootEnableBlocked: "仅检测成功后可启用",
+    skillsViolationAction: "越界动作",
+    skillsExecution: "执行配置",
+    skillsExecutionTimeout: "执行超时（毫秒）",
+    skillsExecutionTimeoutHint: "脚本执行超时时间，最小 1000ms（1秒）",
+    skillsMaxOutputBytes: "最大输出（字节）",
+    skillsMaxOutputBytesHint: "脚本输出最大字节数，最小 1024",
+    skillsRules: "策略规则",
+    skillsRulesHint: "规则数组：id/action/commandTree/contains/reason",
+    skillsRulesJsonError: "命令规则 JSON 无效，请检查格式",
+    policyAllow: "允许",
+    policyConfirm: "确认",
+    policyDeny: "拒绝",
+    skillsPendingTitle: "待确认命令",
+    noSkillPending: "当前没有需要确认的命令。",
+    skillsConfirmPopupTitle: "命令执行确认",
+    skillsConfirmPopupMsg: "检测到 Skill 命令需要你的审批，请选择允许或拒绝。",
+    skillsConfirmTimeoutHint: "若 60 秒内未审批，该命令会自动拒绝。",
+    decideLater: "稍后处理",
+    approve: "允许",
+    reject: "拒绝",
+    commandPreview: "原始命令",
+    confirmReason: "触发规则",
+    createdAt: "创建时间",
+    skillHttpEndpoint: "Skill HTTP",
+    skillSseEndpoint: "Skill SSE",
+    copySkillHttp: "复制 Skill HTTP JSON",
+    copySkillSse: "复制 Skill SSE JSON",
+
+    // MCP Servers
+    mcpServers: "MCP 服务列表",
+    name: "名称",
+    command: "命令",
+    args: "参数",
+    cwd: "工作目录",
+    env: "环境变量",
+    envHint: "每行一个，格式：KEY=VALUE",
+    envPlaceholder: "每行一个环境变量，格式：KEY=VALUE",
+    envVars: "环境变量",
+    addEnvVar: "添加环境变量",
+    removeEnvVar: "删除环境变量",
+    showEnvValue: "显示值",
+    hideEnvValue: "隐藏值",
+    testServer: "检测",
+    testServerHint: "本地启动并发送 initialize，检测 MCP 是否可连通",
+    serverTestIdle: "未检测",
+    serverTestTesting: "检测中",
+    serverTestSuccess: "可连通",
+    serverTestAuthRequired: "待登录",
+    serverTestFailed: "失败",
+    serverTestMissingCommand: "请先填写命令后再检测",
+    serverAuthIdle: "未登录",
+    serverAuthStarting: "启动中",
+    serverAuthPending: "待授权",
+    serverAuthBrowserOpened: "已打开浏览器",
+    serverAuthWaiting: "登录中",
+    serverAuthAuthorized: "已授权",
+    serverAuthConnected: "已登录",
+    serverAuthTimeout: "登录超时",
+    serverAuthFailed: "登录异常",
+    serverAuthLastSuccess: "上次成功：",
+    reauthorizeServer: "重登",
+    clearServerAuth: "清除登录",
+    autoTestingServers: "网关已启动，正在自动检测已启用 MCP 服务…",
+    addServer: "＋ 添加服务",
+    noServers: "暂无服务 — 点击「添加服务」或切换到 JSON 模式粘贴配置。",
+    enabledClick: "已启用 — 点击禁用",
+    disabledClick: "已禁用 — 点击启用",
+    remove: "删除",
+
+    // 端点链接
+    copySSE: "复制 SSE JSON",
+    copyHTTP: "复制 HTTP JSON",
+    noEnabledServers: "无启用服务 — 请添加服务后重启",
+    endpointSSE: "SSE",
+    endpointHTTP: "HTTP",
+
+    // JSON 编辑器
+    jsonHint: "粘贴 mcpServers 格式 — 与 claude_desktop_config.json 相同",
+    jsonParseError: "JSON 解析失败，请检查格式",
+    jsonParseErrorStart: "JSON 解析失败，无法启动",
+    allServersInvalid: "所有服务都缺少名称或命令，请填写后再启动",
+
+    // 错误
+    errorTitle: "错误",
+    portOccupied: "端口被占用",
+    portKillSuccess: "已杀死占用进程，正在重试启动…",
+    portKillFail: "无法清理端口占用进程",
+
+    // 模式
+    visual: "可视化",
+    json: "JSON",
+
+    // 保存配置
+    saveConfig: "保存配置",
+    saveConfigUnsaved: "有未保存修改",
+    restartRequiredHint: "配置改动需重启网关后生效",
+    saving: "保存中…",
+    saveSuccess: "配置已保存",
+
+    // 删除确认
+    confirmDeleteTitle: "确认删除",
+    confirmDeleteMsg: '确定要删除服务 "{name}" 吗？此操作无法撤销。',
+    confirmDeleteSkillRootMsg: "确定要删除这个 Skill 根目录吗？此操作无法撤销。",
+    confirmDeleteWhitelistDirMsg: "确定要删除这个白名单目录吗？此操作无法撤销。",
+    cancel: "取消",
+    confirmDelete: "删除",
+
+    // JSON格式化
+    formatJson: "格式化 JSON",
+    formatError: "JSON 格式化失败，请检查语法",
+
+    // 底部通知条
+    configPath: "配置文件位置",
+    quickLinks: "快捷入口",
+    openBlog: "博客地址",
+    openGithub: "GitHub 地址",
+    openQqGroup: "加入 QQ 群",
+    openTelegramGroup: "加入 TG 群",
+    qqGroupFallbackHint: "当前 QQ 客户端不支持该协议或未配置邀请链接。请在 QQ 里搜索群号 {group}，或提供群邀请链接（k/idkey）以实现一键加群。",
+
+    // 语言切换
+    langToggle: "English",
+  },
+  en: {
+    // Topbar
+    appTitle: "MCP Gateway",
+    running: "Running",
+    stopped: "Stopped",
+    starting: "Starting…",
+    stopping: "Stopping…",
+    start: "Start",
+    stop: "Stop",
+
+    // Tab labels
+    tabMcp: "MCP",
+    tabSkills: "SKILLS",
+
+    // Gateway settings
+    gatewaySettings: "Gateway Settings",
+    listenAddress: "Listen Address",
+    ssePath: "SSE Path",
+    httpStreamPath: "HTTP Stream Path",
+
+    // Security
+    securityConfig: "Security",
+    adminToken: "Admin Token",
+    mcpToken: "MCP Token",
+    authHeaderHint: "Header: Authorization",
+    tokenPlaceholder: "Leave empty to disable",
+
+    // Skills
+    skillsConfig: "Skill MCP",
+    skillsEnable: "Enable Built-in Skill MCP",
+    skillsServerName: "Skill Server Name",
+    skillsRoots: "Skill Roots",
+    skillsRootsHint: "Only check SKILL.md directly in this directory (non-recursive)",
+    skillsPathGuard: "Path Guard",
+    skillsPathGuardEnable: "Enable Path Whitelist Guard",
+    skillsWhitelistDirs: "Whitelist Directories",
+    skillsWhitelistHint: "Add absolute directories; out-of-scope paths trigger policy",
+    addFolderPath: "Add Directory",
+    browseFolder: "Browse",
+    folderPathPlaceholder: "Type directory path or click Browse",
+    skillDirIdle: "Not checked",
+    skillDirChecking: "Checking",
+    skillDirValid: "Valid",
+    skillDirInvalid: "No SKILL.md",
+    skillDirError: "Check failed",
+    skillRootEnableBlocked: "Can be enabled only after a valid check",
+    skillsViolationAction: "Violation Action",
+    skillsExecution: "Execution Settings",
+    skillsExecutionTimeout: "Execution Timeout (ms)",
+    skillsExecutionTimeoutHint: "Script execution timeout in milliseconds, minimum 1000ms (1 second)",
+    skillsMaxOutputBytes: "Max Output (bytes)",
+    skillsMaxOutputBytesHint: "Maximum script output in bytes, minimum 1024",
+    skillsRules: "Policy Rules",
+    skillsRulesHint: "Rule array with id/action/commandTree/contains/reason",
+    skillsRulesJsonError: "Invalid command rules JSON",
+    policyAllow: "Allow",
+    policyConfirm: "Confirm",
+    policyDeny: "Deny",
+    skillsPendingTitle: "Pending Confirmations",
+    noSkillPending: "No pending command confirmations.",
+    skillsConfirmPopupTitle: "Command Confirmation",
+    skillsConfirmPopupMsg: "A Skill command requires your approval. Please approve or reject.",
+    skillsConfirmTimeoutHint: "If not approved within 60 seconds, the command is auto-rejected.",
+    decideLater: "Later",
+    approve: "Approve",
+    reject: "Reject",
+    commandPreview: "Raw Command",
+    confirmReason: "Matched Rule",
+    createdAt: "Created At",
+    skillHttpEndpoint: "Skill HTTP",
+    skillSseEndpoint: "Skill SSE",
+    copySkillHttp: "Copy Skill HTTP JSON",
+    copySkillSse: "Copy Skill SSE JSON",
+
+    // MCP Servers
+    mcpServers: "MCP Servers",
+    name: "Name",
+    command: "Command",
+    args: "Args",
+    cwd: "Working Directory",
+    env: "Environment Variables",
+    envHint: "One per line, format: KEY=VALUE",
+    envPlaceholder: "One environment variable per line, format: KEY=VALUE",
+    envVars: "Environment Variables",
+    addEnvVar: "Add Environment Variable",
+    removeEnvVar: "Remove Environment Variable",
+    showEnvValue: "Show value",
+    hideEnvValue: "Hide value",
+    testServer: "Test",
+    testServerHint: "Start locally and send initialize to verify MCP connectivity",
+    serverTestIdle: "Not tested",
+    serverTestTesting: "Testing",
+    serverTestSuccess: "Reachable",
+    serverTestAuthRequired: "Login needed",
+    serverTestFailed: "Failed",
+    serverTestMissingCommand: "Fill in command before testing",
+    serverAuthIdle: "Signed out",
+    serverAuthStarting: "Starting",
+    serverAuthPending: "Auth needed",
+    serverAuthBrowserOpened: "Browser opened",
+    serverAuthWaiting: "Waiting login",
+    serverAuthAuthorized: "Authorized",
+    serverAuthConnected: "Signed in",
+    serverAuthTimeout: "Auth timeout",
+    serverAuthFailed: "Auth failed",
+    serverAuthLastSuccess: "Last success:",
+    reauthorizeServer: "Reauth",
+    clearServerAuth: "Clear login",
+    autoTestingServers: "Gateway started. Auto-testing enabled MCP servers…",
+    addServer: "＋ Add Server",
+    noServers: "No servers yet — click Add Server or switch to JSON to paste config.",
+    enabledClick: "Enabled — click to disable",
+    disabledClick: "Disabled — click to enable",
+    remove: "Remove",
+
+    // Endpoint links
+    copySSE: "Copy SSE JSON",
+    copyHTTP: "Copy HTTP JSON",
+    noEnabledServers: "No enabled servers — add a server and restart",
+    endpointSSE: "SSE",
+    endpointHTTP: "HTTP",
+
+    // JSON editor
+    jsonHint: "Paste mcpServers format — same as claude_desktop_config.json",
+    jsonParseError: "JSON parse error — please check the format",
+    jsonParseErrorStart: "JSON parse error — cannot start",
+    allServersInvalid: "All servers are missing name or command, please fill them in",
+
+    // Errors
+    errorTitle: "Error",
+    portOccupied: "Port is occupied",
+    portKillSuccess: "Killed occupying process, retrying start…",
+    portKillFail: "Failed to clear port occupying process",
+
+    // Mode
+    visual: "Visual",
+    json: "JSON",
+
+    // Save config
+    saveConfig: "Save",
+    saveConfigUnsaved: "Unsaved changes",
+    restartRequiredHint: "Configuration changes require gateway restart to apply",
+    saving: "Saving…",
+    saveSuccess: "Config saved",
+
+    // Delete confirmation
+    confirmDeleteTitle: "Confirm Delete",
+    confirmDeleteMsg: 'Are you sure you want to delete server "{name}"? This cannot be undone.',
+    confirmDeleteSkillRootMsg: "Are you sure you want to delete this Skill root directory? This cannot be undone.",
+    confirmDeleteWhitelistDirMsg: "Are you sure you want to delete this whitelist directory? This cannot be undone.",
+    cancel: "Cancel",
+    confirmDelete: "Delete",
+
+    // JSON format
+    formatJson: "Format JSON",
+    formatError: "JSON format failed, please check syntax",
+
+    // Bottom notification bar
+    configPath: "Config file location",
+    quickLinks: "Quick links",
+    openBlog: "blog address",
+    openGithub: "GitHub address",
+    openQqGroup: "QQ group address",
+    openTelegramGroup: "Telegram group address",
+    qqGroupFallbackHint: "Current QQ client does not support this protocol, or invite link is not configured. Search group {group} in QQ, or provide an invite link (k/idkey) for one-click join.",
+
+    // Language toggle
+    langToggle: "中文",
+  },
+} as const;
+
+export type TKey = keyof typeof translations.zh;
+
+export function useT(lang: Lang) {
+  return (key: TKey): string => translations[lang][key];
+}
+
