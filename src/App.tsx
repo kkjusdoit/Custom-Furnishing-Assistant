@@ -474,8 +474,8 @@ function App() {
     <div className="app-shell">
       <aside className="sidebar">
         <div className="brand">
-          <div className="brand-title">全屋定制小管家</div>
-          <div className="brand-subtitle">Lite MVP · 轻量业务流</div>
+          <div className="brand-title">鑫帝鸿全屋定制 XDH</div>
+          <div className="brand-subtitle">老板：周平 & 储婷婷</div>
         </div>
         <nav className="nav">
           {NAV_ITEMS.map((item) => (
@@ -502,7 +502,7 @@ function App() {
             <p className="hero-kicker">今日重点</p>
             <h1 className="hero-title">把报价做快，把节点做稳</h1>
             <p className="hero-subtitle">
-              自动计算板材与五金成本，订单节点清晰可见，提醒不漏单。
+              鑫帝鸿全屋定制 XDH · 自动计算板材与五金成本，订单节点清晰可见，提醒不漏单。
             </p>
           </div>
           <div className="hero-actions">
